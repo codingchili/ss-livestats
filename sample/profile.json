@@ -1,0 +1,46 @@
+{
+  'id': '90656096',
+  'type': 'page',
+  'status': 'current',
+  'title': 'Joakim Andrén',
+  'body': {
+    'storage': {
+      'value': '<ac:layout><ac:layout-section ac:type="two_right_sidebar"><ac:layout-cell><p><ac:placeholder>What are your primary contributions to a team?</ac:placeholder></p><p><ac:placeholder>What do you enjoy working with?</ac:placeholder></p><p><ac:placeholder>What is important for you in a team?</ac:placeholder></p><p><br /></p></ac:layout-cell><ac:layout-cell><h1>Info</h1><ac:structured-macro ac:name="details" ac:schema-version="1" ac:macro-id="72a6d987-9490-4e02-aecb-95fae345ca5a"><ac:rich-text-body><table class="wrapped"><colgroup><col style="width: 97.0px;" /><col style="width: 290.0px;" /></colgroup><tbody><tr><th colspan="1">Photo</th><td colspan="1"><div class="content-wrapper"><h1><ac:structured-macro ac:name="profile-picture" ac:schema-version="1" ac:macro-id="0f66c56c-1b57-4d3b-8258-39e44b2768ac"><ac:parameter ac:name="User"><ri:user ri:username="-" /></ac:parameter></ac:structured-macro></h1></div></td></tr><tr><th>Location</th><td><div class="content-wrapper"><p>STHM</p></div></td></tr><tr><th>Personality</th><td><div class="content-wrapper"><p><ac:structured-macro ac:name="personality" ac:schema-version="1" ac:macro-id="2b2f0016-180d-47e0-9fb0-8ab981a1508d"><ac:parameter ac:name="Personality">Owl</ac:parameter></ac:structured-macro></p></div></td></tr><tr><th>Years at Ida</th><td>0</td></tr><tr><th>Years in IT</th><td>5</td></tr></tbody></table></ac:rich-text-body></ac:structured-macro><h1>Choices</h1><ol><li>available to help</li><li>available to help</li><li>available to help</li></ol></ac:layout-cell></ac:layout-section></ac:layout>',
+      'representation': 'storage',
+      '_expandable': {
+        'content': '/rest/api/content/90656096'
+      }
+    },
+    '_expandable': {
+      'editor': '',
+      'view': '',
+      'export_view': '',
+      'styled_view': '',
+      'anonymous_export_view': ''
+    }
+  },
+  'extensions': {
+    'position': 'none'
+  },
+  '_links': {
+    'webui': '/pages/viewpage.action?pageId=90656096',
+    'edit': '/pages/resumedraft.action?draftId=90656096',
+    'tinyui': '/x/YE1nBQ',
+    'collection': '/rest/api/content',
+    'base': 'https://intranet.idainfront.se',
+    'context': '',
+    'self': 'https://intranet.idainfront.se/rest/api/content/90656096'
+  },
+  '_expandable': {
+    'container': '/rest/api/space/SSW',
+    'metadata': '',
+    'operations': '',
+    'children': '/rest/api/content/90656096/child',
+    'restrictions': '/rest/api/content/90656096/restriction/byOperation',
+    'history': '/rest/api/content/90656096/history',
+    'ancestors': '',
+    'version': '',
+    'descendants': '/rest/api/content/90656096/descendant',
+    'space': '/rest/api/space/SSW'
+  }
+}

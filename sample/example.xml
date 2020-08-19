@@ -1,0 +1,120 @@
+<ac:layout>
+    <ac:layout-section ac:type="two_right_sidebar">
+        <ac:layout-cell>
+            <p>
+                <strong>What are your primary contributions to a team?</strong>
+            </p>
+            <ul>
+                <li>Hard skills in web development, server programming and networking.</li>
+                <li>A constant drive for improvement and automation.</li>
+                <li>Critical thinking and innovation.</li>
+                <li>Knowledge sharing.</li>
+                <li>Experience working in
+                    <ul>
+                        <li>Team IIPAX</li>
+                        <li>Team Communication</li>
+                        <li>Thales/Gemalto mega-project</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                <strong>What do you enjoy working with?</strong>
+            </p>
+            <ul>
+                <li>Security; networking, web, service, blockchain</li>
+                <li>Clustering and micro-services.</li>
+                <li>Web development
+                    <ul>
+                        <li>css3, es20, webgl/pixijs.</li>
+                    </ul>
+                </li>
+                <li>Awesome/fresh technology
+                    <ul>
+                        <li>Reactive programming, distributed data, document databases.</li>
+                        <li>Hazelcast, Elasticsearch, Vertx, polymer, web components etc.</li>
+                    </ul>
+                </li>
+                <li>Kotlin, Python, Javascript and Java 11+.</li>
+                <li>Code reviews, automatic testing and clean code.</li>
+            </ul>
+            <p>
+                <strong>What is important for you in a team?</strong>
+            </p>
+            <ul>
+                <li>Prioritizing improvement work.</li>
+                <li>Finding new ways to be more effective.</li>
+                <li>Dare to do things in new ways, innovation.</li>
+                <li>Question everything, especially me.</li>
+            </ul>
+        </ac:layout-cell>
+        <ac:layout-cell>
+            <h1>Info</h1>
+            <ac:structured-macro ac:name="details" ac:schema-version="1"
+                                 ac:macro-id="72a6d987-9490-4e02-aecb-95fae345ca5a">
+                <ac:rich-text-body>
+                    <table class="wrapped">
+                        <colgroup>
+                            <col style="width: 97.0px;"/>
+                            <col style="width: 290.0px;"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th colspan="1">Photo
+                                </th>
+                                <td colspan="1">
+                                    <div class="content-wrapper">
+                                        <h1>
+                                            <ac:structured-macro ac:name="profile-picture" ac:schema-version="1"
+                                                                 ac:macro-id="d388cf62-92d5-45b8-bee9-46f9406759b3">
+                                                <ac:parameter ac:name="User">
+                                                    <ri:user
+                                                            ri:userkey="ff8080815576c4ab0155a0b534900001"/>
+                                                </ac:parameter>
+                                            </ac:structured-macro>
+                                        </h1>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>
+                                    <div class="content-wrapper">
+                                        <p>LKPG</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Personality</th>
+                                <td>
+                                    <div class="content-wrapper">
+                                        <p>
+                                            <ac:structured-macro ac:name="personality" ac:schema-version="1"
+                                                                 ac:macro-id="2b2f0016-180d-47e0-9fb0-8ab981a1508d">
+                                                <ac:parameter ac:name="Personality">Owl
+                                                </ac:parameter>
+                                            </ac:structured-macro>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Years at Ida</th>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <th>Years in IT</th>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ac:rich-text-body>
+            </ac:structured-macro>
+            <h1>Choices</h1>
+            <ol>
+                <li>Boverket</li>
+                <li>???</li>
+                <li>???</li>
+            </ol>
+        </ac:layout-cell>
+    </ac:layout-section>
+</ac:layout>

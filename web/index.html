@@ -1,0 +1,269 @@
+<!html>
+<html>
+<head>
+    <title>Ida Infront - Self Selection</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/skeleton.css">
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            background-color: #f8f8ff;
+        }
+
+        #header {
+            height: 48px;
+            background-color: #3EB1C8;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            left: 0px;
+            text-align: center;
+            font-weight: bolder;
+            color: #ffffff;
+        }
+
+        #footer {
+            height: 48px;
+            opacity: 0.64;
+            position: static;
+            bottom: 0px;
+            right: 0px;
+            left: 0px;
+            text-align: center;
+            color: #333333;
+        }
+
+        .bar-text {
+            text-shadow: 1px 1px 1px rgba(243, 243, 243, 0.59);
+            margin-top: 12px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <p class="bar-text">Ida Infront - self selection event profiles overview</p>
+</div>
+
+<style>
+    #metrics {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-flow: wrap;
+        margin-top: 48px;
+    }
+
+    .metric {
+        min-width: 296px;
+        max-width: 296px;
+        width: 296px;
+        height: 128px;
+        border: 1px solid rgba(0, 0, 0, 0.32);
+        border-radius: 2px;
+        text-align: center;
+        margin: 32px;
+        background-color: white;
+        user-select: none;
+    }
+
+    .metric-title {
+        display: block;
+        margin-top: 28px;
+        font-size: small;
+        opacity: 0.5;
+    }
+
+    .metric-value {
+        font-size: xx-large;
+        opacity: 0.78;
+    }
+
+    #piechart {
+        margin: auto;
+        border: 1px solid rgba(0, 0, 0, 0.32);
+        border-radius: 2px;
+    }
+
+    #table-popular {
+        max-width: 60%;
+        margin: auto;
+        margin-top: 32px;
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.32);
+        border-radius: 2px;
+        padding: 12px;
+        margin-bottom: 32px;
+    }
+
+    tr:hover {
+        background-color: #3EB1C824;
+        cursor: pointer;
+    }
+
+    table {
+        width: 100%;
+    }
+</style>
+<div id="metrics">
+
+    <!-- metric: percent of employees spent more than 90% at ida. -->
+    <div id="metric-longtimers" class="metric">
+        <span class="metric-title">Spent at least 90% of worklife at ida</span>
+        <p class="metric-value" id="longtimer-ratio"></p>
+    </div>
+
+    <!-- metric: students. -->
+    <div id="metric-total" class="metric">
+        <span class="metric-title">Total profiles</span>
+        <p class="metric-value" id="hits"></p>
+    </div>
+
+    <!-- metric: students. -->
+    <div id="metric-students" class="metric">
+        <span class="metric-title">Less than 3 years in IT</span>
+        <p class="metric-value" id="fresher-ratio"></p>
+    </div>
+</div>
+
+<!-- pie chart: popular spirit animals -->
+<div id="pie-animals">
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+</div>
+
+<!-- pie chart: popular choices-->
+<div id="table-popular">
+    <table class="">
+        <thead>
+        <tr>
+            <th>Team name</th>
+            <th>First picks</th>
+            <th>Total picks</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="footer">
+        <span class="bar-text">Updated at <span id="updated"></span> in <span id="time"></span>.</span>
+</div>
+
+<script>
+    let cards = {};
+
+    function update() {
+        fetch('/cards.json')
+            .then(response => response.json())
+            .then(retrieved => {
+                cards = retrieved;
+
+                let longtimer_ratio = Math.ceil(cards.applicants.filter(applicant => {
+                    return parseFloat(applicant.ida_years) / parseFloat(applicant.years) > 0.9
+                }).length / cards.hits * 100);
+
+                let fresher_ratio = Math.ceil(cards.applicants.filter(applicant => {
+                    return parseFloat(applicant.years) <= 3
+                }).length / cards.hits * 100);
+
+                let animals = {};
+                cards.applicants.forEach(applicant => {
+                    animals[applicant.personality] = (animals[applicant.personality] || 0) + 1;
+                });
+
+                clearTable();
+
+                let choices = {};
+                let upsert = (name, block) => {
+                    name = name.toLowerCase()
+                        .replace("team", "")
+                        .replace(/\?+/g, "")
+                        .trim();
+
+                    name = (name.charAt(0).toUpperCase() + name.slice(1));
+
+                    if (name.length > 0) {
+                        if (!choices[name]) {
+                            choices[name] = {
+                                name: name,
+                                count: 0,
+                                first: 0
+                            }
+                        }
+                        block(choices[name]);
+                    }
+                };
+
+                cards.applicants.forEach(applicant => {
+                    applicant.choices.forEach(choice => {
+                        if (choice.length > 0) {
+                            upsert(choice, choice => choice.count++);
+                        }
+                    });
+                    if (applicant.choices.length > 0) {
+                        upsert(applicant.choices[0], choice => choice.first++);
+                    }
+                });
+
+                let list = Object.values(choices);
+                list = list.sort((a, b) => {
+                    return b.count - a.count
+                });
+
+                for (let item of list) {
+                    addTableItem(item.name, item.first, item.count);
+                }
+
+
+                document.getElementById('longtimer-ratio').innerText = `${longtimer_ratio}%`;
+                document.getElementById('fresher-ratio').innerText = `${fresher_ratio}%`;
+                document.getElementById('hits').innerText = cards.hits;
+                document.getElementById('time').innerText = cards.time;
+                document.getElementById('updated').innerText = new Date(cards.updated).toLocaleString();
+                //document.getElementById('#hits').innerText = cards.hits;
+
+                google.charts.load('current', {'packages': ['corechart']});
+                google.charts.setOnLoadCallback(() => {
+                    drawChart(animals);
+                });
+            });
+    }
+
+    setInterval(update, 5000);
+    update();
+
+    function clearTable() {
+        tableBody().innerHTML = '';
+    }
+
+    function tableBody() {
+        return document.querySelector('#table-popular > table > tbody');
+    }
+
+    function addTableItem(name, firsts, total) {
+        let row = document.createElement("tr");
+        let addColumn = (value) => {
+            let element = document.createElement("td");
+            element.innerText = value;
+            row.appendChild(element);
+        };
+        [name, firsts, total].forEach(addColumn);
+        tableBody().append(row);
+    }
+
+    function drawChart(animals) {
+        let data = google.visualization.arrayToDataTable([['', ''],
+            ['Owl', animals['Owl']],
+            ['Lion', animals['Lion']],
+            ['St Bernard', animals['St Bernard']],
+        ]);
+
+        let options = {title: 'Spirit animal favorization'};
+        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+</script>
+</body>
+</html>
