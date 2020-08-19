@@ -22,3 +22,9 @@ or just ..
 pip install bs4 lxml aiohttp
 python main.py
 ```
+
+### Notes
+
+This project requires a Jira setup to work with some custom macros, but you get the point.
+
+For internal use by organization.
