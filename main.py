@@ -11,7 +11,7 @@ OUTPUT = "web/cards.json"
 UPDATE = 30
 
 
-async def update(username, password):
+async def update():
     profiles = ProfileApi(username, password)
     while True:
         cards = await profiles.all()
@@ -31,7 +31,7 @@ try:
 
     loop = asyncio.get_event_loop()
 
-    loop.create_task(update(username, password))
+    loop.create_task(update())
     loop.create_task(web.serve())
 
     loop.run_forever()
