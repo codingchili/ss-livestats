@@ -83,7 +83,8 @@ class ProfileApi:
 
     @staticmethod
     def get_choices(soup):
-        choices = soup.find('h1', string='Choices').next_sibling
-        if choices is not None:
+        choices = soup.find('h1', string='Choices')
+        if choices is not None and choices.next_sibling is not None:
+            choices = choices.next_sibling
             return list(map(lambda element: element.get_text(), choices.find_all('li')))
         return []
