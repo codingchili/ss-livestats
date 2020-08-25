@@ -172,6 +172,7 @@
     function normalizeName(name) {
         name = name.toLowerCase()
             .replace("team", "")
+            .replace("-", "")
             .replace(/\?+/g, "")
             .trim();
         return (name.charAt(0).toUpperCase() + name.slice(1));

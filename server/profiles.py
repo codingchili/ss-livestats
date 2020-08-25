@@ -30,7 +30,7 @@ class ProfileApi:
             "hits": len(profiles),
             "updated": time.time() * 1000,
             "time": elapsed,
-            "applicants": list(map(self.parse, profiles))
+            "applicants": list(filter(None, map(self.parse, profiles)))
         }
 
     async def list(self):
@@ -50,10 +50,14 @@ class ProfileApi:
             return json.loads(await (await session.get(url)).text())
 
     def parse(self, profile):
-        result = self.decode_html(profile['body']['storage']['value'])
-        result['name'] = profile['title']
-        result['id'] = profile['id']
-        return result
+        try:
+            result = self.decode_html(profile['body']['storage']['value'])
+            result['name'] = profile['title']
+            result['id'] = profile['id']
+            return result
+        except:
+            log("skipped broken profile {}".format(profile['title']))
+            return None
 
     @staticmethod
     def decode_html(html):
