@@ -13,9 +13,8 @@ class ProfileApi:
     profiles_list = api_url + '/search?cql=(label=%22profile-card%22)&limit=255'
     profile_load = api_url + '/{}?expand=body.storage'
 
-    def __init__(self, user, password):
-        self.user = user
-        self.password = password
+    def __init__(self, session):
+        self.session = session
 
     async def all(self):
         """ lists all profiles and then resolves each. """
@@ -37,7 +36,7 @@ class ProfileApi:
         """ list all profiles tagged with the 'profile-card' label. """
         all = (await self.get(self.profiles_list))['results']
         log("retrieved participant metadata.")
-        return all
+        return all or []
 
     async def retrieve(self, profile_id):
         """ parse information from a profile-card page as json """
@@ -46,18 +45,23 @@ class ProfileApi:
         return profile
 
     async def get(self, url):
-        async with aiohttp.ClientSession(auth=aiohttp.BasicAuth(self.user, self.password)) as session:
-            return json.loads(await (await session.get(url)).text())
+        try:
+            return json.loads(await (await self.session.get(url)).text())
+        except Exception as e:
+            log("Failed to call {}, {}".format(url, str(e)))
+            return None
 
     def parse(self, profile):
-        try:
-            result = self.decode_html(profile['body']['storage']['value'])
-            result['name'] = profile['title']
-            result['id'] = profile['id']
-            return result
-        except:
-            log("skipped broken profile {}".format(profile['title']))
-            return None
+        if profile is not None:
+            try:
+                result = self.decode_html(profile['body']['storage']['value'])
+                result['name'] = profile['title']
+                result['id'] = profile['id']
+                return result
+            except:
+                log("skipped broken profile {}".format(profile['title']))
+
+        return None
 
     @staticmethod
     def decode_html(html):

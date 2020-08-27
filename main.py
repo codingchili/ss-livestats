@@ -8,18 +8,22 @@ from server import web
 from server.profiles import *
 
 OUTPUT = "web/cards.json"
-UPDATE = 30
+UPDATE = 60
 
 
 async def update():
-    profiles = ProfileApi(username, password)
-    while True:
-        cards = await profiles.all()
-        with open(OUTPUT, 'w') as output:
-            logger.log('writing user profiles to {}'.format(OUTPUT))
-            output.write(json.dumps(cards, indent=4, sort_keys=False))
-        logger.log('user profiles written to file, next update in {}s.'.format(UPDATE))
-        await asyncio.sleep(UPDATE)
+    con =  aiohttp.TCPConnector(limit=8)
+    auth = aiohttp.BasicAuth(username, password)
+
+    async with aiohttp.ClientSession(connector=con, auth=auth) as session:
+        profiles = ProfileApi(session)
+        while True:
+            cards = await profiles.all()
+            with open(OUTPUT, 'w') as output:
+                logger.log('writing user profiles to {}'.format(OUTPUT))
+                output.write(json.dumps(cards, indent=4, sort_keys=False))
+            logger.log('user profiles written to file, next update in {}s.'.format(UPDATE))
+            await asyncio.sleep(UPDATE)
 
 try:
     if len(sys.argv) == 3:
